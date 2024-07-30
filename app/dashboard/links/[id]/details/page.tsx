@@ -69,7 +69,7 @@ export default function Page({params}: {params: {id: string}}) {
                     <p>Link:<span className="ml-4 text-xl font-semibold">{link?.link}</span></p>
                     <p>Short Link:<span className="ml-4 text-xl font-semibold">localhost:3000/{link?.shortLink}</span></p>
                     <p>Clicks:<span className="ml-4 text-xl font-semibold">{link?.clicks}</span></p>
-                    <p>Custom Slug:<span className="ml-4 text-xl font-semibold">localhost:3000/{link?.customSlug}</span></p>
+                    <p>Custom Slug:<span className="ml-4 text-xl font-semibold">sniplink-five.vercel.app/{link?.customSlug}</span></p>
                     <p>Created At:<span className="ml-4 text-xl font-semibold">{formattedDate}</span></p>
                     <div className="flex flex-col md:flex-row gap-6 items-center">
                         <Image src={link?.QrCode ?? ''} alt="image" width={200} height={200} />

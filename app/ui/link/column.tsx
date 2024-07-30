@@ -39,7 +39,7 @@ export const columns: ColumnDef<LinkDetails>[] = [
         header: 'Short Link',
         cell: ({ row }) => {
           const shortLink = row.getValue("shortLink")
-          const formatted = `localhost:3000/${shortLink}`
+          const formatted = `sniplink-five.vercel.app/${shortLink}`
      
           return <a href={`/${shortLink}`} target="blank">
             <div className="">{formatted} </div>
@@ -55,7 +55,7 @@ export const columns: ColumnDef<LinkDetails>[] = [
         header: 'Custom Slug',
         cell: ({ row }) => {
           const customSlug = row.getValue("customSlug")
-          const formatted = `localhost:3000/${customSlug}`
+          const formatted = `sniplink-five.vercel.app/${customSlug}`
      
           return <div className="">{formatted}</div>
         },
