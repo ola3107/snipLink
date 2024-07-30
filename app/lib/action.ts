@@ -120,13 +120,14 @@ export const handleEditLinkById = async (id: string) => {
 export const deleteLink = async (id: string, shortLink: string) => {
 
     return new Promise<EditLinkDetails | void>((resolve, reject) => {
+      
       auth.onAuthStateChanged(async (user) => {
         if (!user) {
           console.error("User is not authenticated.");
           reject("User is not authenticated.");
           return;
         }
-
+  
         try {
           const userLinksCollection = collection(db, "users", user.uid, "links");
           const publicLinksCollection = collection(db, "links");
