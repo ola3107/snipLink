@@ -76,7 +76,7 @@ export const columns: ColumnDef<LinkDetails>[] = [
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuItem
-                  onClick={() => {copyToClipboard(`localhost:3000/${linkDetails.shortLink}`)}}
+                  onClick={() => {copyToClipboard(`sniplink-five.vercel.app/${linkDetails.shortLink}`)}}
                 >
                   <CopiedToast />
                 </DropdownMenuItem>

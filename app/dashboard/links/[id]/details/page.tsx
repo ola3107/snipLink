@@ -67,7 +67,7 @@ export default function Page({params}: {params: {id: string}}) {
                 <div className="pt-20 mb-14 flex flex-col gap-6">
                     <p>Name:<span className="ml-4 text-xl font-semibold">{link?.name}</span></p>
                     <p>Link:<span className="ml-4 text-xl font-semibold">{link?.link}</span></p>
-                    <p>Short Link:<span className="ml-4 text-xl font-semibold">localhost:3000/{link?.shortLink}</span></p>
+                    <p>Short Link:<span className="ml-4 text-xl font-semibold">sniplink-five.vercel.app/{link?.shortLink}</span></p>
                     <p>Clicks:<span className="ml-4 text-xl font-semibold">{link?.clicks}</span></p>
                     <p>Custom Slug:<span className="ml-4 text-xl font-semibold">sniplink-five.vercel.app/{link?.customSlug}</span></p>
                     <p>Created At:<span className="ml-4 text-xl font-semibold">{formattedDate}</span></p>
