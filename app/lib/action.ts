@@ -224,7 +224,7 @@ export const redirectLink = async (shortLink: string) => {
           throw new Error("No link found for the given shortLink.");
         }
 
-        updateDoc(userLinkDoc, { clicks: increment(1) });
+        await updateDoc(userLinkDoc, { clicks: increment(1) });
         console.log("Document updated.");
 
 
@@ -233,7 +233,7 @@ export const redirectLink = async (shortLink: string) => {
         try {
           new URL(link);
         } catch (e) {
-          link = 'http://' + link;
+          link = 'https://' + link;
         }
     
         window.location.href = link;

@@ -17,6 +17,7 @@ import {
   import { copyToClipboard } from "@/app/lib/action"
   import { CopiedToast } from "../button"
   import { DeleteToast } from "../button"
+import { format } from "path"
 
 export const columns: ColumnDef<LinkDetails>[] = [
     {
@@ -33,6 +34,11 @@ export const columns: ColumnDef<LinkDetails>[] = [
     {
         accessorKey: 'link',
         header: 'Link',
+        cell: ({ row }) => {
+          const link: string = row.getValue("link")
+          const formatted = link.length > 30 ? `${link.substring(0, 30)}...` : link
+          return <p>{formatted}</p>
+        }
     },
     {
         accessorKey: 'shortLink',
