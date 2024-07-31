@@ -81,7 +81,7 @@ export async function handleGetLinks() {
     });
 }
 
-export const handleEditLinkById = async (id: string) => {
+export const EditLinkById = async (id: string) => {
     return new Promise<EditLinkDetails | null>((resolve, reject) => {
       auth.onAuthStateChanged(async (user) => {
         if (!user) {
@@ -112,9 +112,34 @@ export const handleEditLinkById = async (id: string) => {
           reject(e);
         }
       });
-    });
+  });
 }
 
+export const updateLink = async (id: string, name: string, link: string, shortLink: string, customSlug?: string, ) => {
+    return new Promise<EditLinkDetails | void>((resolve, reject) => {
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          console.error("User is not authenticated.");
+          reject("User is not authenticated.");
+          return;
+        }
+  
+        try {
+          const userLinksCollection = collection(db, "users", user.uid, "links");
+          const publicLinksCollection = collection(db, "links");
+          const publicLinkDoc = doc(publicLinksCollection, shortLink);
+          const userLinkDoc = doc(userLinksCollection, id);
+          await updateDoc(publicLinkDoc, { link });
+          await updateDoc(userLinkDoc, { name, link, customSlug });
+          resolve();
+        } catch (e) {
+          console.error("Error updating document: ", e);
+          reject(e);
+        }
+      });
+    }
+  );
+}
 
 
 export const deleteLink = async (id: string, shortLink: string) => {
