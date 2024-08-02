@@ -10,6 +10,8 @@ export type LinkDetails = {
     customSlug?: string
 }
 
+export type CreateLink = Omit<LinkDetails, 'id'>;
+
 export type EditLinkDetails = {
     name: string;
     link: string;

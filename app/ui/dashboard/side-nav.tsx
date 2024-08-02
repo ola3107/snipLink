@@ -3,7 +3,6 @@
 import SideNavLinks from "./sidenav-links";
 import SnipLinkLogo from "../snipLink-logo";
 import Link from "next/link";
-import { BiLogOutCircle } from "react-icons/bi";
 import Logout from "./logout";
 
 
@@ -13,8 +12,8 @@ export default function SideNav() {
    
     return(
         <div className="flex h-full flex-col px-3 py-4 md:px-3">
-            <Link href="/">
-                <div className="md:pt-20 p-3 bg-slate-700 text-white bg-slate-500 dark:bg-slate-400 rounded-2xl">
+            <Link href="/" className="">
+                <div className="sticky top-0 md:pt-20 p-3 bg-slate-700 text-white dark:bg-slate-500 rounded-2xl">
                     <SnipLinkLogo />
                 </div>
             </Link>

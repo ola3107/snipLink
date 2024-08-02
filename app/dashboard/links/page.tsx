@@ -7,7 +7,6 @@ import { handleGetLinks } from "@/app/lib/action";
 import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ButtonLoading } from "@/app/ui/loading";
 import MobileLink from "@/app/ui/link/mobile-links";
 
 export default function Page() {

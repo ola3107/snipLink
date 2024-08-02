@@ -14,9 +14,6 @@ export default function Layout({children}: {children: React.ReactNode}) {
     const [user, setUser] = useState<User | null>(null);
     const router = useRouter();
     useEffect(() => {
-        console.log("Setting up onAuthStateChanged listener");
-
-        
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
               setUser(user);
@@ -28,7 +25,6 @@ export default function Layout({children}: {children: React.ReactNode}) {
         });
     
         return () => {
-            console.log("unsubscribed");
             unsubscribe();
         }
     }, [router]);
@@ -36,8 +32,6 @@ export default function Layout({children}: {children: React.ReactNode}) {
     if(loading){
         return <div className="grid place-content-center h-screen"><ButtonLoading /></div>
     }
-
-    // console.log(user);
 
     return (
        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">

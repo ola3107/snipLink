@@ -11,9 +11,7 @@ import { useEffect } from 'react';
 
 
 export default function Home() {
-  useEffect(() => {console.log("rootlayout")}, [])  
   return (
-     
     <div className='px-[5%] md:px-[10%] '>
       <div className='sticky top-2 bg-slate-200 dark:bg-slate-400 rounded-[20px]'>
         <Header />

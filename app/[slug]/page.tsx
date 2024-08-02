@@ -1,42 +1,41 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { redirectLink } from "../lib/action";
 import { ButtonLoading } from "../ui/loading";
 
-
-
-export default function Page({params}: {params: {shortLink: string}}) {
-    const shortLink = params.shortLink;
+export default function Page({ params }: { params: { slug: string } }) {
+    const slug = params.slug;
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const redirect = async () => {
             try {
-                await redirectLink(shortLink);
-               setLoading(false)
+                await redirectLink(slug);
+                setLoading(false);
             } catch (err: any) {
                 setError(err.message || "Error redirecting link");
-                setLoading(false)
+                setLoading(false);
             }
         }
-        redirect() 
-        
-    }, [shortLink])
+        redirect();
+    }, [slug]);
 
-    if(loading){
+    if (loading) {
         return (
             <div className="grid place-content-center h-screen">
                 <ButtonLoading />
             </div>
-        )
+        );
     }
-    if(error){
+    if (error) {
         return (
             <div className="grid place-content-center h-screen">
                 {error}
             </div>
-        )
+        );
     }
+
+    return null; // Assuming the redirect will happen and there's nothing to render after.
 }

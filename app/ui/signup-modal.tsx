@@ -15,10 +15,9 @@ import { MdOutlineKey } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
 import { BsTwitterX } from "react-icons/bs";
-import { Btn } from "./button";
-import Link from "next/link";
 import { useState, FormEvent } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
+import { createUserWithEmailAndPassword, AuthError } from "firebase/auth";
 import { auth } from "@/app/firebase/config"
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -27,27 +26,36 @@ import SnipLinkLogo from "./snipLink-logo";
 
 export default function SignupModal() {
     const [form, setForm] = useState({ email: "", password: ""})
-    const [createUserWithEmailAndPassword,] = useCreateUserWithEmailAndPassword(auth)
+    const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string | null>(null)
     const Router = useRouter()
     
     const handleChange = (e: FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget
         setForm((prev) => ({...prev, [name]: value}))
-        console.log(form)
     }
     
     const handleSignUp = async (e: FormEvent) => {
         e.preventDefault()
+        setLoading(true)
+        setError(null)
         try {
-            const res = await createUserWithEmailAndPassword(form.email, form.password)
+            const res = await createUserWithEmailAndPassword(auth, form.email, form.password)
             console.log(res)
             if(res?.user){
-                console.log("User Created Successfully")
                 Router.push("/dashboard")
             }
             console.log("User Created Successfully")
         } catch (error) {
             console.log("Error during sign up:", error)
+            const authError = error as AuthError
+            let errorMessage = "An error occurred while signing up"
+            if (authError.code ===  "auth/email-already-in-use"){
+                errorMessage = "User with provided email already exist."
+            }
+            setError(errorMessage)
+        } finally{
+            setLoading(false)
         }
     }
 
@@ -125,7 +133,8 @@ export default function SignupModal() {
                                 </div>
                             </div>
                         </div>
-                        <Button className="mt-6 w-full bg-blue-500 text-slate-200 hover:bg-blue-700" onClick={handleSignUp}>Sign Up</Button>
+                        {error && <p className="text-red-500 text-center mt-4 font-bold">{error}</p>}
+                        <Button disabled={loading} className="mt-6 w-full bg-blue-500 text-slate-200 hover:bg-blue-700" onClick={handleSignUp}>{loading? "Signing Up" : "Sign Up"}</Button>
                         <p className="text-center mt-6">Or Signup With</p>
                         <div className="flex justify-center gap-8 mt-4">
                             <FcGoogle className="text-4xl"/>

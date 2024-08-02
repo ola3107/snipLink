@@ -7,7 +7,7 @@ import RecentLink from '../../ui/dashboard/recent-link'
 
 export default function Page() {
     return (
-        <div className='mb-16'>
+        <div className='mb-14'>
            <h1 className='text-3xl font-bold'>
                 Dashboard
            </h1>

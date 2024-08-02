@@ -18,6 +18,7 @@ export default function EditForm({link, id, shortLink}: EditFormProps) {
         link: "",
         customSlug: "" 
     })
+    const [error, setError] = useState<any>(null)
 
     useEffect(() => {
         setForm({
@@ -36,10 +37,11 @@ export default function EditForm({link, id, shortLink}: EditFormProps) {
 
     const handleEdit = async () => {
         try {
-            await updateLink(id, form.name, form.link,shortLink, form.customSlug)
+            await updateLink(id, form.name, form.link, shortLink, form.customSlug, link.customSlug || "")
             router.push("/dashboard/links")
         } catch (error) {
             console.error("Error updating link", error)
+            setError(error)
         }
     }
 
@@ -75,6 +77,7 @@ export default function EditForm({link, id, shortLink}: EditFormProps) {
                         onChange={handleChange}
                         />
                     </div>
+                    {error && <p className="text-red-500 mt-4">{error}</p>}
                     <div className="mt-6 text-center">
                         <Button type="submit" className="font-bold w-full">Edit</Button>
                     </div>

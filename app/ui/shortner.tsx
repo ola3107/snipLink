@@ -2,12 +2,12 @@ import {Btn} from "./button"
 
 export default function Shortner() {
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const form = e.currentTarget as HTMLFormElement
-        const input = form.querySelector("input") as HTMLInputElement
-        const url = input.value
-    }
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault()
+    //     const form = e.currentTarget as HTMLFormElement
+    //     const input = form.querySelector("input") as HTMLInputElement
+    //     const url = input.value
+    // }
     return (
         <div className="flex justify-center py-20 bg-slate-400 px-3 rounded-2xl" id="shortner">
             <form action="" className="w-[500px] border text-center px-4 py-5 rounded-2xl shadow-xl">

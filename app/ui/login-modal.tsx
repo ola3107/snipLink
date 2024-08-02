@@ -15,22 +15,19 @@ import { MdOutlineKey } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
 import { BsTwitterX } from "react-icons/bs";
-import Link from "next/link";
 import { useState, FormEvent} from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth"
+import {signInWithEmailAndPassword, AuthError} from "firebase/auth"
 import { auth } from "@/app/firebase/config"
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import SnipLinkLogo from "./snipLink-logo";
 import SignupModal from "./signup-modal";
-import { AuthError } from "firebase/auth"
 
 export default function loginModal() {
-
     const [form, setForm] = useState({ email: "", password: ""})
-    const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth)
+    const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
-
 
     const handleChange = (e: FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget
@@ -39,13 +36,26 @@ export default function loginModal() {
 
     const handleSignIn = async (e: FormEvent) => {
         e.preventDefault();
+        setError(null)
+        setLoading(true)
         try {
-          const res = await signInWithEmailAndPassword(form.email, form.password);
+          const res = await signInWithEmailAndPassword(auth, form.email, form.password);
             if(res?.user){
                 router.push("/dashboard")
             }
         } catch (e) {
-          console.error("Error during sign in:", e);
+            console.error("Error during sign in:", e);
+            const authError = e as AuthError
+            let errorMessage = "An error occurred while signing in"
+            if (authError.code === 'auth/invalid-credential') {
+                errorMessage = 'incorrect email or password. Please try again.';
+            }
+
+        
+          setError(errorMessage)
+          setLoading(false)
+        } finally{
+            setLoading(false)
         }
     };
 
@@ -121,7 +131,8 @@ export default function loginModal() {
                                 </div>
                             </div>
                         </div>
-                        <Button className="bg-blue-500 w-full mt-6 text-slate-200 hover:bg-blue-700" onClick={handleSignIn} type="submit">Sign In</Button>
+                        {error && <p className="text-red-500 text-center mt-4 font-bold">{error}</p>}
+                        <Button className="bg-blue-500 w-full mt-6 text-slate-200 hover:bg-blue-700" disabled={loading} onClick={handleSignIn} type="submit">{loading? "Signing In..." : "Sign in"}</Button>
                         <p className="text-center mt-6">Or Login With</p>
                         <div className="flex justify-center gap-8 mt-4 ">
                             <FcGoogle className="text-4xl"/>

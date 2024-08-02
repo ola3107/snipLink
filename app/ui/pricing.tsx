@@ -6,7 +6,7 @@ import {Btn} from "./button";
 
 export default function Pricing() {
     return (
-        <div className='pb-20' id="pricing">
+        <div className='py-20' id="pricing">
             <div className="text-center mt-10">
                 <h1 className="text-3xl font-bold">Simple and Affordable</h1>
                 <div className={`${lusitana.className} antialiased max-w-lg mx-auto mt-2`}>

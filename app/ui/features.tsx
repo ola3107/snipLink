@@ -49,7 +49,7 @@ const features: Feature[] = [
 export default function Features() {
 
     return (
-        <div className="py-16" id="features">
+        <div className="pt-16" id="features">
             <h1 className="text-3xl text-center font-bold my-10">What We Offer</h1>
             <div className="flex flex-wrap justify-center gap-10 mt-16 ">
                 {features.map((feature, index) => {

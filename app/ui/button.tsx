@@ -2,7 +2,11 @@ import Link from "next/link"
 import clsx from "clsx"
 import React from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { IconType } from 'react-icons';
 import { Button } from "@/components/ui/button";
+import { MdOutlineContentCopy } from "react-icons/md";
+
+
 
 interface BtnProps {
     name: string;
@@ -24,6 +28,8 @@ export  const Btn: React.FC<BtnProps> = ({name, href="", className=""}) => {
     )
 }
 
+
+
 export const CopiedToast = () => {
     const { toast } = useToast()
    
@@ -35,7 +41,7 @@ export const CopiedToast = () => {
           })
         }}
       >
-        Copy Link
+        < MdOutlineContentCopy />
       </div>
     )
 }

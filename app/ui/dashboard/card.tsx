@@ -1,5 +1,9 @@
+"use client"
+
 import { GiClick } from "react-icons/gi";
 import { FaLink } from "react-icons/fa";
+import { getTotalClicks, getTotalLinks } from "@/app/lib/action";
+import { useEffect, useState } from "react";
 
 
 const Icons = {
@@ -9,7 +13,7 @@ const Icons = {
 
 interface cardProps {
     name: string,
-    value: string,
+    value: number,
     icon: "clicks" | "links"
 }
 
@@ -17,8 +21,19 @@ interface cardProps {
 
 
 export default function CardWrapper() {
-        const totalClicks = "3905"
-        const totalLinks = "346"
+
+    const [totalClicks, setTotalClicks] = useState<number>(0);
+    const [totalLinks, setTotalLinks] = useState<number>(0);
+
+    useEffect(() => {
+        const fetchTotalClicks = async () => {
+            const clicks = await getTotalClicks();
+            const links = await getTotalLinks();
+            setTotalClicks(clicks? clicks : 0);
+            setTotalLinks(links? links : 0);
+        }
+        fetchTotalClicks();
+    }, [])
     return(
         <>
             <Card name='Total Clicks' icon="clicks" value={totalClicks} />

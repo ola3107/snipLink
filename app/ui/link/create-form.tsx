@@ -5,16 +5,9 @@ import { useState, FormEvent } from "react"
 import { handleCreateShortenLink } from "@/app/lib/action"
 import { useRouter } from "next/navigation";
 
-
-
-
-
-
-
-
-
 export default function CreateForm() {
     const [form, setForm] = useState({ name: "", link: "", customize: ""})
+    const [error, setError] = useState<any>(null)
     const router = useRouter()
     const handleChange = (e: FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget
@@ -22,17 +15,18 @@ export default function CreateForm() {
     }
 
     const createShortLink = async (e: FormEvent) => {
-        e.preventDefault()
-        handleCreateShortenLink(form.name, form.link, form.customize)
-        router.push("/dashboard/links")
-
-    }
-
-
-
+        e.preventDefault();
+        try {
+            await handleCreateShortenLink(form.name, form.link, form.customize);
+            router.push("/dashboard/links");
+        } catch (error) {
+            console.error("Error creating link", error);
+            setError(error);
+        }
+    };
 
     return(
-       <div className="flex justify-center">
+       <div className="flex justify-center mb-16">
             <div className="max-w-xl flex-1 dark:bg-slate-800 bg-slate-400 px-6 rounded-xl">
                 <h1 className="text-3xl font-bold text-white mt-4">Create your Link</h1>
                 <form action="" className="my-10">
@@ -66,6 +60,7 @@ export default function CreateForm() {
                         onChange={handleChange}
                         />
                     </div>
+                    {error && <p className="text-red-500 text-sm mt-4">{error.message}</p>}
                     <div className="mt-6 text-center">
                         <Button className="font-bold w-full font-semibold" onClick={createShortLink}>Create</Button>
                     </div>
