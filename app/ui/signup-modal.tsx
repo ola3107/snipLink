@@ -58,13 +58,7 @@ export default function SignupModal() {
             setLoading(false)
         }
     }
-
-
-
-
-
-
-
+    
     return (
         <Dialog>
             <DialogTrigger asChild>

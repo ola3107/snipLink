@@ -7,7 +7,7 @@ import LoginModal from "./login-modal";
 
 export default function Hero() {
     return (
-        <div className="flex justify-center text-center py-10 md:py-16">
+        <div className="flex justify-center text-center py-10 md:py-16" id="hero">
             <div className="max-w-2xl mt-10 md:mt-16">
                 <h1 className="text-5xl md:font-bold font-semibold">Enhance Digital Engagement With SnipLink</h1>
                 <div className={`${lusitana.className}`}>
