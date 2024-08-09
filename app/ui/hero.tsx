@@ -14,7 +14,7 @@ export default function Hero() {
                     <h3 className="text-xl mt-6 md:font-semibold">Personalize your shortened URLs to align with your brand identity. Utilize custom slugs, branded links, and domain customization options to reinforce your brand presence and enhance user engagement.</h3>
                 </div>
                 <div className="md:text-xl text-xl mt-6">
-                    <LoginModal />
+                    <LoginModal text={"Get Started"} />
                 </div>
                 <div className="flex w-full mt-28 gap-16 justify-center flex-wrap">
                     <div className="flex flex-col items-center">

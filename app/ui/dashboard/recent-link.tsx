@@ -1,31 +1,11 @@
 "use client"
 
-
-import clsx from "clsx"
-import { BsCopy } from "react-icons/bs";
-import {useState, useEffect, use} from "react";
-import { LinkDetails } from "@/app/lib/definations";
 import {getRecentLinks} from "@/app/lib/action";
 import { copyToClipboard } from "@/app/lib/action"
 import { CopiedToast } from "../button"
 
-export default function RecentLink() {
-    const [links, setLinks] = useState<LinkDetails[]>([]);
-
-
-    useEffect(() => {
-        const fetchLinks = async () => {
-            try {
-                const fetchedLinks = await getRecentLinks();
-                setLinks(fetchedLinks? fetchedLinks : []);
-            } catch (error) {
-                console.error("Error fetching links", error);
-                throw new Error("Error fetching links");
-            }
-        }
-
-        fetchLinks();
-    }, [])
+export default async function RecentLink() {
+    const links = await getRecentLinks();
 
     return (
         <div>
@@ -34,7 +14,9 @@ export default function RecentLink() {
             </h2>
 
             <div className="mt-6">
-                {
+                { links.length === 0 ? <div className="text-xl">
+                    <p>you have no link created yet, head over to the link page to create a new link</p>
+                </div> :
                     links.map((link, index) => {
                         return (
                             <div key={index} className="py-2 px-2 mt-2 shadow-sm border-b">

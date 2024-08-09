@@ -12,6 +12,8 @@ import { IoArrowBack } from "react-icons/io5";
 import { DeleteToast } from "@/app/ui/button";
 import { copyToClipboard } from "@/app/lib/action";
 import { CopiedToast } from "@/app/ui/button";
+import Link from "next/link";
+import { MdOutlineContentCopy } from "react-icons/md";
 
 
 
@@ -21,7 +23,6 @@ export default function Page({params}: {params: {id: string}}) {
     const router = useRouter();
     const createdAtDate = link?.createdAt?.toDate ? link.createdAt.toDate() : null;
     const formattedDate = createdAtDate ? createdAtDate.toDateString() : null;
-    const qrCodeUrl = link?.QrCode ?? '';
     const handleDelete = async (id: string, shortLink: string, customSlug?: string) => {
         try {
             await deleteLink(id, shortLink, customSlug);
@@ -63,7 +64,10 @@ export default function Page({params}: {params: {id: string}}) {
                     active: true
                 }
             ]} />
-            <Button onClick={() => router.back()} className="gap-2 text-lg font-semibold mt-4"><IoArrowBack /> Back</Button>
+            <div className="flex justify-between items-center mt-4">
+                <Button onClick={() => router.back()} className="gap-2 text-lg font-semibold"><IoArrowBack /> Back</Button>
+                <Link href={`/dashboard/links/${link?.id}/edit`}><Button>Edit Link</Button></Link>
+            </div>
             <div className="">
                 <div className="pt-10 md:pt-20 mb-14 flex flex-col gap-6">
                     <div className="flex gap-4 font-semibold">
@@ -79,18 +83,22 @@ export default function Page({params}: {params: {id: string}}) {
                     <div className="flex gap-4 font-semibold items-center">
                         <p>Short Link:</p>
                         <a href={`/${link?.shortLink}`}>sniplink-five.vercel.app/{link?.shortLink}</a>
-                        <div 
-                        className="text-xl"
-                        onClick={() => {copyToClipboard(`sniplink-five.vercel.app/${link?.shortLink}`)}}
-                        ><CopiedToast /></div>
+                        <MdOutlineContentCopy
+                        onClick={(e) => {
+                            e.preventDefault();
+                            copyToClipboard(`sniplink-five.vercel.app/${link?.shortLink}`);
+                          }}
+                        />
                     </div>
                     <div className="flex gap-4 font-semibold items-center">
                         <p>Custom Slug:</p>
                         <p >sniplink-five.vercel.app/{link?.customSlug}</p>
-                        <div 
-                        className="text-xl"
-                        onClick={() => {copyToClipboard(`sniplink-five.vercel.app/${link?.customSlug}`)}}
-                        ><CopiedToast /></div>
+                        <MdOutlineContentCopy
+                        onClick={(e) => {
+                            e.preventDefault(); 
+                            copyToClipboard(`sniplink-five.vercel.app/${link?.customSlug}`);
+                          }}
+                        />
                     </div>
                     <div className="flex gap-4 font-semibold">
                         <p>Clicks:</p>
@@ -101,10 +109,10 @@ export default function Page({params}: {params: {id: string}}) {
                         <p >{formattedDate}</p>
                     </div>
                     <div className="flex flex-col md:flex-row gap-6 items-center">
-                        <Image src={link?.QrCode ?? ''} alt="image" width={200} height={200} />
+                        <Image src={link?.QrCode ?? ''} alt="QR code" width={200} height={200} />
                         <Button className="bg-green-600 text-slate-200 dark:hover:text-slate-800">
-                            <a href={qrCodeUrl} download="qr-code.png" target="_blank" rel="noreferrer">
-                            Download QR Code
+                            <a href={link?.QrCode} download="qrcode.png" target="_blank" rel="noopener noreferrer">
+                                Download QR Code
                             </a>
                         </Button>
                     </div>
@@ -120,7 +128,5 @@ export default function Page({params}: {params: {id: string}}) {
             </div>
 
         </div>
-
-        
     );
 }

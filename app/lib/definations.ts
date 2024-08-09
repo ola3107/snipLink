@@ -20,7 +20,10 @@ export type EditLinkDetails = {
 
 export type FullLinkDetails = LinkDetails & {
     QrCode: string;
-  };
+};
+
+export type TemporaryLink = Omit <LinkDetails, 'id' | 'clicks' | 'name' | 'customSlug'>;
+
 
 
 

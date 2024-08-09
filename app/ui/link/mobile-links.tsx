@@ -15,7 +15,8 @@ export default function MobileLink( data: {data: LinkDetails[]}) {
             <Link href='/dashboard/links/create'><Button className="mb-4"><IoMdAdd className="mr-2 text-2xl"/> Create Link</Button></Link>
 
             {
-                data.data.sort((prev, next) => next?.createdAt?.toDate()?.getTime() - prev?.createdAt?.toDate()?.getTime()).map((link) => {
+                data.data.length === 0 ? <p className="text-center text-xl">No links created yet</p> :
+                data.data.map((link) => {
                     const Longurl = link?.link
                     const formatted = Longurl.length > 30 ? `${Longurl.substring(0, 30)}...` : Longurl
                     return (

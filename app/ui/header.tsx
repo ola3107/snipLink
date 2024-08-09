@@ -25,7 +25,7 @@ export default function Header() {
             <header className="hidden md:flex justify-between items-center rounded-[20px] py-2 px-2 my-10 shadow">
                 <SnipLinkLogo />
                 <HomeLink />
-                <LoginModal />
+                <LoginModal text={"Get Started"} />
             </header>
             <header>
                 <div className="flex justify-between items-center border-2 rounded-[20px] py-2 px-2 my-5 shadow md:hidden">

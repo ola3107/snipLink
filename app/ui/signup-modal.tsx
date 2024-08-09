@@ -34,7 +34,7 @@ export default function SignupModal() {
         const { name, value } = e.currentTarget
         setForm((prev) => ({...prev, [name]: value}))
     }
-    
+   
     const handleSignUp = async (e: FormEvent) => {
         e.preventDefault()
         setLoading(true)
@@ -58,7 +58,7 @@ export default function SignupModal() {
             setLoading(false)
         }
     }
-    
+
     return (
         <Dialog>
             <DialogTrigger asChild>

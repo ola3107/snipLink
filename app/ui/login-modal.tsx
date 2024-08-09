@@ -23,7 +23,11 @@ import { useRouter } from "next/navigation";
 import SnipLinkLogo from "./snipLink-logo";
 import SignupModal from "./signup-modal";
 
-export default function loginModal() {
+interface LoginModalProps {
+    text: string
+}
+
+export default function loginModal({ text }: LoginModalProps) {
     const [form, setForm] = useState({ email: "", password: ""})
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
@@ -46,16 +50,25 @@ export default function loginModal() {
         } catch (e) {
             console.error("Error during sign in:", e);
             const authError = e as AuthError
-            let errorMessage = "An error occurred while signing in"
             if (authError.code === 'auth/invalid-credential') {
-                errorMessage = 'incorrect email or password. Please try again.';
+                setError('incorrect email or password. Please try again.');
+            } else if(authError.code === "auth/too-many-requests"){
+                setError("Too many attempt. Try again later")
+            }else{
+                setError("An error occured while Signin in")
             }
 
-        
-          setError(errorMessage)
-          setLoading(false)
+            
+          
         } finally{
             setLoading(false)
+            setForm({
+                email: "",
+                password: ""
+            })
+            setTimeout(() => {
+                setError(null)
+            }, 5000)
         }
     };
 
@@ -67,7 +80,7 @@ export default function loginModal() {
         <Dialog>
             <DialogTrigger asChild>
                 <Button className="bg-blue-500 text-slate-200 text-lg font-bold hover:bg-blue-700 px-4 py-1 rounded-2xl">
-                    Get Started
+                    {text}
                 </Button>
             </DialogTrigger>
             <DialogContent>

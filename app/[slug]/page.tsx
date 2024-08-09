@@ -18,6 +18,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                 setError(err.message || "Error redirecting link");
                 setLoading(false);
             }
+
+            
         }
         redirect();
     }, [slug]);
@@ -37,5 +39,5 @@ export default function Page({ params }: { params: { slug: string } }) {
         );
     }
 
-    return null; // Assuming the redirect will happen and there's nothing to render after.
+    return null;
 }

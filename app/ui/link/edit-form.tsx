@@ -4,6 +4,7 @@ import { EditLinkDetails } from "@/app/lib/definations"
 import { updateLink } from "@/app/lib/action"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Loading from "@/app/dashboard/(overview)/loading"
 
 interface EditFormProps {
     link: EditLinkDetails,
@@ -19,6 +20,7 @@ export default function EditForm({link, id, shortLink}: EditFormProps) {
         customSlug: "" 
     })
     const [error, setError] = useState<any>(null)
+    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         setForm({
@@ -36,12 +38,14 @@ export default function EditForm({link, id, shortLink}: EditFormProps) {
     }
 
     const handleEdit = async () => {
+        setLoading(true)
         try {
             await updateLink(id, form.name, form.link, shortLink, form.customSlug, link.customSlug || "")
             router.push("/dashboard/links")
         } catch (error) {
             console.error("Error updating link", error)
             setError(error)
+            setLoading(false)
         }
     }
 
@@ -79,7 +83,7 @@ export default function EditForm({link, id, shortLink}: EditFormProps) {
                     </div>
                     {error && <p className="text-red-500 mt-4">{error}</p>}
                     <div className="mt-6 text-center">
-                        <Button type="submit" className="font-bold w-full">Edit</Button>
+                        <Button type="submit" disabled={loading} className="font-bold w-full">{loading? "Editing Link" : "Edit Link"}</Button>
                     </div>
                 </form>
             </div>

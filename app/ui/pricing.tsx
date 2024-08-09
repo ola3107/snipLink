@@ -23,7 +23,7 @@ export default function Pricing() {
                     <p className="mt-4 text-md"><IoMdCheckmarkCircleOutline  className="inline text-blue-900 dark:text-blue-200 mr-3"/> Up to 10 users</p>
                     <p className="mt-4 text-md"><IoMdCheckmarkCircleOutline  className="inline text-blue-900 dark:text-blue-200 mr-3"/> Basic access to all features</p>
                     <div className="flex justify-center mt-8">
-                    <LoginModal />
+                    <LoginModal text={"Get Started"} />
                     </div>
                 </div>
                 <div className='py-2 border  p-6 py-6 rounded-2xl'>
@@ -35,7 +35,7 @@ export default function Pricing() {
                     <p className="mt-4 text-md"><IoMdCheckmarkCircleOutline  className="inline text-blue-900 dark:text-blue-200 mr-3"/>Up to 100 users</p>
                     <p className="mt-4 text-md"><IoMdCheckmarkCircleOutline  className="inline text-blue-900 dark:text-blue-200 mr-3"/>Additional features</p>
                     <div className="flex justify-center mt-8">
-                    <LoginModal />
+                    <LoginModal text={"Get Started"} />
                     </div>
                 </div>
                 <div className='py-2 border  p-6 py-6 rounded-2xl'>
@@ -47,7 +47,7 @@ export default function Pricing() {
                     <p className="mt-4 text-md"><IoMdCheckmarkCircleOutline  className="inline text-blue-900 dark:text-blue-200 mr-3"/>Unlimited users</p>
                     <p className="mt-4 text-md"><IoMdCheckmarkCircleOutline  className="inline text-blue-900 dark:text-blue-200 mr-3"/>Premium features</p>
                     <div className="flex justify-center mt-8">
-                    <LoginModal />
+                    <LoginModal text={"Get Started"} />
                     </div>
                 </div>
             </div>

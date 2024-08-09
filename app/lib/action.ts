@@ -1,7 +1,7 @@
 import { getFirestore, collection, addDoc, Timestamp, getDocs, deleteDoc, doc, setDoc, updateDoc, increment, getDoc, query, where  } from 'firebase/firestore';
 import { auth } from '../firebase/config'; 
 import { nanoid } from 'nanoid';
-import { CreateLink, LinkDetails, EditLinkDetails  } from './definations';
+import { CreateLink, LinkDetails, EditLinkDetails} from './definations';
 
 const db = getFirestore(); 
 
@@ -140,10 +140,7 @@ export const updateLink = async (id: string, name: string, link: string, shortLi
         const userLinksCollection = collection(db, "users", user.uid, "links");
         const publicLinksCollection = collection(db, "links");
         const customSlugCollection = collection(db, "customSlugs");
-        const publicLinkDoc = doc(publicLinksCollection, shortLink);
-        const userLinkDoc = doc(userLinksCollection, id);
-        await updateDoc(publicLinkDoc, { link });
-        await updateDoc(userLinkDoc, { name, link, customSlug });
+        
 
         if(customSlug){
           const newCustomSlug = await getDoc(doc(customSlugCollection, customSlug));
@@ -153,6 +150,11 @@ export const updateLink = async (id: string, name: string, link: string, shortLi
             return;
           }
         }
+
+        const publicLinkDoc = doc(publicLinksCollection, shortLink);
+        const userLinkDoc = doc(userLinksCollection, id);
+        await updateDoc(publicLinkDoc, { link });
+        await updateDoc(userLinkDoc, { name, link, customSlug });
 
         await setDoc(doc(customSlugCollection, customSlug),{
           linkId: id,
@@ -234,9 +236,6 @@ export const getLinkById = async (id: string) => {
   });
 }
 
-
-
-
 export const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
 }
@@ -247,7 +246,6 @@ export const redirectLink = async (slug: string) => {
         const customLinksCollection = collection(db, "customSlugs");
         let querySnapshot = await getDocs(query(publicLinksCollection, where("__name__", "==", slug)));
         let data = querySnapshot.docs[0]?.data();
-        
 
         if(!data){
           querySnapshot = await getDocs(query(customLinksCollection, where("__name__", "==", slug)));
@@ -280,35 +278,36 @@ export const redirectLink = async (slug: string) => {
     }
 }
 
-export const getTotalClicks = async () => {
+export const getCardData = async () => {
   try {
     const fetchLink = await handleGetLinks();
-    const totalClicks = fetchLink.reduce((acc, link) => acc + link.clicks, 0);
-    return totalClicks;
+    const data = await Promise.all([
+      fetchLink.reduce((acc, link) => acc + link.clicks, 0),
+      fetchLink.length
+    ])
+
+    const totalClicks = data[0];
+    const totalLinks = data[1];
+
+    return { totalClicks, totalLinks };
+
+
   } catch (error) {
     console.error("Error fetching links", error);
+    throw new Error("Error fetching links");
   }
 }
 
-
-export const getTotalLinks = async () => {
+export const getRecentLinks = async (): Promise<LinkDetails[] > => {
   try {
     const fetchLink = await handleGetLinks();
-    const totalLink = fetchLink.length;
-    return totalLink;
-  } catch (error) {
-    console.error("Error fetching links", error);
-  }
-}
-
-export const getRecentLinks = async (): Promise<LinkDetails[] | void> => {
-  try {
-    const fetchLink = await handleGetLinks();
-    const recentLinks = fetchLink.sort((a, b) => b?.createdAt?.toDate()?.getTime() - a?.createdAt?.toDate()?.getTime())
-    .slice(0, 5);
+    const data = await Promise.all([
+      fetchLink.sort((a, b) => b?.createdAt?.toDate()?.getTime() - a?.createdAt?.toDate()?.getTime())
+    ])
+    const recentLinks = data[0].slice(0, 5);
     return recentLinks;
   } catch (error) {
     console.error("Error fetching links", error);
+    throw error;
   }
 }
-

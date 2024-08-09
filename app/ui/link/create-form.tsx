@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 export default function CreateForm() {
     const [form, setForm] = useState({ name: "", link: "", customize: ""})
     const [error, setError] = useState<any>(null)
+    const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
     const handleChange = (e: FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget
@@ -16,12 +17,14 @@ export default function CreateForm() {
 
     const createShortLink = async (e: FormEvent) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await handleCreateShortenLink(form.name, form.link, form.customize);
             router.push("/dashboard/links");
         } catch (error) {
             console.error("Error creating link", error);
             setError(error);
+            setLoading(false);
         }
     };
 
@@ -62,7 +65,7 @@ export default function CreateForm() {
                     </div>
                     {error && <p className="text-red-500 text-sm mt-4">{error.message}</p>}
                     <div className="mt-6 text-center">
-                        <Button className="font-bold w-full font-semibold" onClick={createShortLink}>Create</Button>
+                        <Button className="font-bold w-full font-semibold" disabled={loading} onClick={createShortLink}>{loading? "Creating Link..." : "Create Link"}</Button>
                     </div>
                 </form>
             </div>
