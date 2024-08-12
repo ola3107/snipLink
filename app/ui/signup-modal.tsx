@@ -16,7 +16,6 @@ import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
 import { BsTwitterX } from "react-icons/bs";
 import { useState, FormEvent } from "react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
 import { createUserWithEmailAndPassword, AuthError } from "firebase/auth";
 import { auth } from "@/app/firebase/config"
 import { Button } from "@/components/ui/button";

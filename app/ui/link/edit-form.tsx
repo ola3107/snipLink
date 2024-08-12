@@ -43,9 +43,11 @@ export default function EditForm({link, id, shortLink}: EditFormProps) {
             await updateLink(id, form.name, form.link, shortLink, form.customSlug, link.customSlug || "")
             router.push("/dashboard/links")
         } catch (error) {
-            console.error("Error updating link", error)
             setError(error)
             setLoading(false)
+            setTimeout(() => {
+                setError(null)
+            }, 5000)
         }
     }
 
@@ -81,9 +83,9 @@ export default function EditForm({link, id, shortLink}: EditFormProps) {
                         onChange={handleChange}
                         />
                     </div>
-                    {error && <p className="text-red-500 mt-4">{error}</p>}
+                    {error && <p className="text-red-500 text-center font-bold mt-4">{error}</p>}
                     <div className="mt-6 text-center">
-                        <Button type="submit" disabled={loading} className="font-bold w-full">{loading? "Editing Link" : "Edit Link"}</Button>
+                        <Button type="submit" disabled={loading} className="font-bold w-full">{loading? "Editing Link..." : "Edit Link"}</Button>
                     </div>
                 </form>
             </div>

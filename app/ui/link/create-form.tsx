@@ -25,6 +25,9 @@ export default function CreateForm() {
             console.error("Error creating link", error);
             setError(error);
             setLoading(false);
+            setTimeout(() => {
+                setError(null);
+            }, 5000);
         }
     };
 
@@ -63,7 +66,7 @@ export default function CreateForm() {
                         onChange={handleChange}
                         />
                     </div>
-                    {error && <p className="text-red-500 text-sm mt-4">{error.message}</p>}
+                    {error && <p className="text-red-500 font-bold text-center text-sm mt-4">{error.message}</p>}
                     <div className="mt-6 text-center">
                         <Button className="font-bold w-full font-semibold" disabled={loading} onClick={createShortLink}>{loading? "Creating Link..." : "Create Link"}</Button>
                     </div>

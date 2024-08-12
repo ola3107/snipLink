@@ -7,6 +7,7 @@ import { RiMenuFold3Fill } from "react-icons/ri";
 import { IoCloseSharp } from "react-icons/io5";
 import { useState } from "react";
 import LoginModal from "./login-modal";
+import ModeSelection from "./mode-selection";
 
 
 export default function Header() {
@@ -25,7 +26,11 @@ export default function Header() {
             <header className="hidden md:flex justify-between items-center rounded-[20px] py-2 px-2 my-10 shadow">
                 <SnipLinkLogo />
                 <HomeLink />
-                <LoginModal text={"Get Started"} />
+                <div className="flex items-center gap-2">
+                    <ModeSelection />
+                    <div className="border-2 h-[50px]"></div>
+                    <LoginModal text={"Get Started"} />
+                </div>
             </header>
             <header>
                 <div className="flex justify-between items-center border-2 rounded-[20px] py-2 px-2 my-5 shadow md:hidden">

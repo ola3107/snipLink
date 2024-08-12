@@ -4,7 +4,7 @@ import {getRecentLinks} from "@/app/lib/action";
 import { copyToClipboard } from "@/app/lib/action"
 import { CopiedToast } from "../button"
 
-export default async function RecentLink() {
+export default async function RecentLinks() {
     const links = await getRecentLinks();
 
     return (
@@ -14,7 +14,7 @@ export default async function RecentLink() {
             </h2>
 
             <div className="mt-6">
-                { links.length === 0 ? <div className="text-xl">
+                { links.length === 0 ? <div className="text-sm text-center">
                     <p>you have no link created yet, head over to the link page to create a new link</p>
                 </div> :
                     links.map((link, index) => {

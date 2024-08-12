@@ -12,7 +12,7 @@ export default async function Page() {
   const ascLink = links.sort((a,b) => b.createdAt?.toDate()?.getTime() - a.createdAt?.toDate()?.getTime() );
   
   return (
-    <div>
+    <div className="mb-32 md:mb-4">
       <h1 className="font-bold text-3xl">
         Links
       </h1>

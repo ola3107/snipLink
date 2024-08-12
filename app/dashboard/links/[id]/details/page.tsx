@@ -50,7 +50,6 @@ export default function Page({params}: {params: {id: string}}) {
                 setLink(null);
             }
         }
-
         fetchLink();
     }, [id]);
 

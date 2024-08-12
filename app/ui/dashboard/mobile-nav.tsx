@@ -29,7 +29,7 @@ const links = [
 export const MobileNav = () => {
     const pathname = usePathname()
     return(
-        <div className=" md:hidden w-full bg-slate-700 bg-slate-500 dark:bg-slate-400 flex items-center ">
+        <div className=" md:hidden block z-50 w-full bg-slate-700 bg-slate-500 dark:bg-slate-400 flex items-center">
             <div className="flex text-slate-200 justify-between px-3 w-screen">
                 {
                     links.map((link, index) => {

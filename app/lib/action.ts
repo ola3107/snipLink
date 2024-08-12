@@ -13,6 +13,14 @@ export const handleCreateShortenLink = async (name: string, link: string, custom
         return;
     }
 
+    const slugRex = /^[a-zA-Z0-9-_]{5,15}$/;
+
+    if(customSlug && !slugRex.test(customSlug)){
+      console.error("Custom Slug is invalid");
+      reject(new Error("Custom slug must be 5-15 characters long, contain only letters, numbers, and underscores, and must not contain spaces."));
+      return;
+    }
+
     const data = {
         name,
         link,
@@ -141,14 +149,17 @@ export const updateLink = async (id: string, name: string, link: string, shortLi
         const publicLinksCollection = collection(db, "links");
         const customSlugCollection = collection(db, "customSlugs");
         
-
+        const slugRex = /^[a-zA-Z0-9-_]{5,15}$/;
         if(customSlug){
           const newCustomSlug = await getDoc(doc(customSlugCollection, customSlug));
           if (newCustomSlug.exists()){
-            console.error("Custom Slug already exists");
             reject("Custom Slug already exists");
             return;
           }
+        }
+        if(customSlug && !slugRex.test(customSlug)){
+          reject("Custom slug must be 5-15 characters long, contain only letters, numbers, and underscores, and must not contain spaces.");
+          return;
         }
 
         const publicLinkDoc = doc(publicLinksCollection, shortLink);

@@ -12,8 +12,10 @@ export function CardsSkeleton() {
 
 export function RecentLinksSkeleton() {
     return (
-        <div>
+        <div className="z-10">
             <Skeleton className="h-10 w-[200px]" />
+            <RecentLinkSkeleton />
+            <RecentLinkSkeleton />
             <RecentLinkSkeleton />
             <RecentLinkSkeleton />
             <RecentLinkSkeleton />
@@ -23,8 +25,16 @@ export function RecentLinksSkeleton() {
 
 export function CardSkeleton() {
     return (
-        <Skeleton className="h-[68px] md:h-[112px] w-full" />
+        <Skeleton className="h-[60px] md:h-[112px] w-full" />
     );
+}
+
+export function ChartSkeleton() {
+    return(
+        <div className="h-[400px] w-full">
+            <Skeleton className="h-full w-full" />
+        </div>
+    )
 }
 
 export function RecentLinkSkeleton() {
@@ -32,7 +42,7 @@ export function RecentLinkSkeleton() {
         <div className="border-b-2 pb-2 mt-10">
             <Skeleton className="h-6 w-[200px]" />
             <div className="flex md:gap-10 gap-6 mt-2">
-                <Skeleton className=":h-6 w-[200px]" />
+                <Skeleton className=":h-3 w-[200px]" />
                 <Skeleton className="h-6 w-[30px]" />
             </div>
         </div>
