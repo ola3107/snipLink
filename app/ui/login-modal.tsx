@@ -59,10 +59,7 @@ export default function loginModal({ text }: LoginModalProps) {
             }
             setLoading(false)
         } finally{
-            setForm({
-                email: "",
-                password: ""
-            })
+            
             setTimeout(() => {
                 setError(null)
             }, 5000)
