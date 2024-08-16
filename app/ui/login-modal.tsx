@@ -57,11 +57,8 @@ export default function loginModal({ text }: LoginModalProps) {
             }else{
                 setError("An error occured while Signin in")
             }
-
-            
-          
-        } finally{
             setLoading(false)
+        } finally{
             setForm({
                 email: "",
                 password: ""

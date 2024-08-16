@@ -38,8 +38,8 @@ export const handleCreateShortenLink = async (name: string, link: string, custom
         const customSlugSnapshot = await getDoc(customSlugDoc);
 
         if (customSlugSnapshot.exists()) {
-            console.error("Custom Slug already exists");
-            reject(new Error("Custom Slug already exists"));
+            console.error("Custom Slug already in use");
+            reject(new Error("Custom Slug already in use"));
             return; 
         }
       }

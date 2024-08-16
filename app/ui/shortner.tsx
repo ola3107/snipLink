@@ -9,6 +9,7 @@ export default function Shortner() {
                     type="text"
                     placeholder="Shorten a link here..."
                     id="shortLink"
+                    name="shortLink"
                     className="w-full py-3 px-3 my-4 rounded-xl"/>
                     <div>
                         <LoginModal text={"Create Short Url"} />

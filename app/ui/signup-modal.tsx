@@ -53,8 +53,11 @@ export default function SignupModal() {
                 errorMessage = "User with provided email already exist."
             }
             setError(errorMessage)
-        } finally{
             setLoading(false)
+        }finally{
+            setTimeout(() => {
+                setError(null)
+            }, 5000)
         }
     }
 

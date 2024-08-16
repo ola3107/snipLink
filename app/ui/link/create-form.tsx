@@ -37,7 +37,7 @@ export default function CreateForm() {
                 <h1 className="text-3xl font-bold text-white mt-4">Create your Link</h1>
                 <form action="" className="my-10">
                     <div className="mt-6">
-                        <label htmlFor="Name">Name of your Link</label>
+                        <label htmlFor="name">Name of your Link</label>
                         <Input 
                         name="name"
                         type="text" 
@@ -47,7 +47,7 @@ export default function CreateForm() {
                         />
                     </div>
                     <div className="mt-6">
-                        <label htmlFor="Link">Enter your Link</label>
+                        <label htmlFor="link">Enter your Link</label>
                         <Input 
                         name="link"
                         type="text" 
@@ -57,7 +57,7 @@ export default function CreateForm() {
                         />
                     </div>
                     <div className="mt-6">
-                        <label htmlFor="Customize">Customize your Link(optional)</label>
+                        <label htmlFor="customize">Customize your Link(optional)</label>
                         <Input 
                         name="customize"
                         type="text" 
