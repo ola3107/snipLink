@@ -5,13 +5,10 @@ import Home from '../app/page';
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
     push: jest.fn(),
-    prefetch: jest.fn(),
-    replace: jest.fn(),
-    back: jest.fn(),
   }),
 }));
 
-describe('Page', () => {
+describe('Home Page', () => {
 
   it('renders a input for shortLink', () => {
     render(<Home />);
