@@ -16,7 +16,7 @@ import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
 import { BsTwitterX } from "react-icons/bs";
 import { useState, FormEvent} from "react";
-import {signInWithEmailAndPassword, AuthError} from "firebase/auth"
+import {signInWithEmailAndPassword, AuthError, GoogleAuthProvider, signInWithPopup, GithubAuthProvider} from "firebase/auth"
 import { auth } from "@/app/firebase/config"
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -65,6 +65,41 @@ export default function loginModal({ text }: LoginModalProps) {
             }, 5000)
         }
     };
+
+    const googleSignIn = async () => {
+        const provider = new GoogleAuthProvider();
+        setLoading(true)
+        try {
+            await signInWithPopup(auth, provider);
+            router.push("/dashboard")
+        } catch (e) {
+            console.error("Error during sign in:", e);
+            setError("An error occured while Signin in")
+        } finally{
+            
+            setTimeout(() => {
+                setError(null)
+            }, 5000)
+        }
+    }
+
+    const githubSignIn = async () => {
+        const provider = new GithubAuthProvider();
+        setLoading(true)
+        try {
+            await signInWithPopup(auth, provider);
+            router.push("/dashboard")
+        } catch (e) {
+            console.error("Error during sign in:", e);
+            setError("An error occured while Signin in")
+            setLoading(false)
+        } finally{
+            
+            setTimeout(() => {
+                setError(null)
+            }, 5000)
+        }
+    }
 
 
 
@@ -142,9 +177,8 @@ export default function loginModal({ text }: LoginModalProps) {
                         <Button className="bg-blue-500 w-full mt-6 text-slate-200 hover:bg-blue-700" disabled={loading} onClick={handleSignIn} type="submit">{loading? "Signing In..." : "Sign in"}</Button>
                         <p className="text-center mt-6">Or Login With</p>
                         <div className="flex justify-center gap-8 mt-4 ">
-                            <FcGoogle className="text-4xl"/>
-                            <BsGithub className="text-4xl"/>
-                            <BsTwitterX className="text-4xl"/>
+                            <FcGoogle className="text-4xl" onClick={googleSignIn}/>
+                            <BsGithub className="text-4xl" onClick={githubSignIn}/>
                         </div>
                     </div>
                     <div>

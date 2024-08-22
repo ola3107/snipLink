@@ -16,7 +16,7 @@ import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
 import { BsTwitterX } from "react-icons/bs";
 import { useState, FormEvent } from "react";
-import { createUserWithEmailAndPassword, AuthError } from "firebase/auth";
+import { createUserWithEmailAndPassword, AuthError, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/app/firebase/config"
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -40,21 +40,60 @@ export default function SignupModal() {
         setError(null)
         try {
             const res = await createUserWithEmailAndPassword(auth, form.email, form.password)
-            console.log(res)
             if(res?.user){
                 Router.push("/dashboard")
             }
             console.log("User Created Successfully")
         } catch (error) {
-            console.log("Error during sign up:", error)
             const authError = error as AuthError
             let errorMessage = "An error occurred while signing up"
             if (authError.code ===  "auth/email-already-in-use"){
                 errorMessage = "User with provided email already exist."
             }
+            if(authError.code === "auth/missing-email"){
+                errorMessage = "Please provide an email address."
+            }
+            if(authError.code === "auth/missing-password"){
+                errorMessage = "Please provide a password."
+            }
             setError(errorMessage)
             setLoading(false)
         }finally{
+            setTimeout(() => {
+                setError(null)
+            }, 5000)
+        }
+    }
+
+    const googleSignIn = async () => {
+        const provider = new GoogleAuthProvider();
+        setLoading(true)
+        try {
+            await signInWithPopup(auth, provider);
+            Router.push("/dashboard")
+        } catch (e) {
+            console.error("Error during sign in:", e);
+            setError("An error occured while Signin in")
+        } finally{
+            
+            setTimeout(() => {
+                setError(null)
+            }, 5000)
+        }
+    }
+
+    const githubSignIn = async () => {
+        const provider = new GithubAuthProvider();
+        setLoading(true)
+        try {
+            await signInWithPopup(auth, provider);
+            Router.push("/dashboard")
+        } catch (e) {
+            console.error("Error during sign in:", e);
+            setError("An error occured while Signin in")
+            setLoading(false)
+        } finally{
+            
             setTimeout(() => {
                 setError(null)
             }, 5000)
@@ -133,9 +172,8 @@ export default function SignupModal() {
                         <Button disabled={loading} className="mt-6 w-full bg-blue-500 text-slate-200 hover:bg-blue-700" onClick={handleSignUp}>{loading? "Signing Up" : "Sign Up"}</Button>
                         <p className="text-center mt-6">Or Signup With</p>
                         <div className="flex justify-center gap-8 mt-4">
-                            <FcGoogle className="text-4xl"/>
-                            <BsGithub className="text-4xl"/>
-                            <BsTwitterX className="text-4xl"/>
+                            <FcGoogle className="text-4xl" onClick={googleSignIn}/>
+                            <BsGithub className="text-4xl" onClick={githubSignIn}/>
                         </div>
                     </div>
                     <div>
