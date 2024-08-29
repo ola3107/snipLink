@@ -1,5 +1,4 @@
 name: Test
-
 on:
   push:
     branches:
@@ -7,39 +6,31 @@ on:
   pull_request:
     branches:
       - '*'
-
 defaults:
   run:
     working-directory: ./
-
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [20]
-
     steps:
       - name: Checkout the Repository
         uses: actions/checkout@v4
 
-      - name: Setup Nodejs
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.7.0
+        run: npm install -g pnpm@9.7.0
 
       - name: Install dependencies
-        run: pnpm install
-
-      - name: Build the project
-        run: pnpm build
+        run: |
+          pnpm install
+          pnpm build
 
       - name: Install Playwright browsers
         run: |
@@ -47,10 +38,8 @@ jobs:
           pnpm playwright install firefox --with-deps
           pnpm playwright install webkit --with-deps
 
-      - name: Run tests and collect coverage
-        run: |
-          pnpm test -- --coverage
-          pnpm test:e2e
+      - name: Run tests
+        run: pnpm test:coverage && pnpm test:e2e
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
