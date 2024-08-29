@@ -6,9 +6,6 @@ on:
   pull_request:
     branches:
       - '*'
-defaults:
-  run:
-    working-directory: ./
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,26 +20,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Install pnpm
-        run: npm install -g pnpm@9.7.0
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Install Playwright browsers
         run: |
-          pnpm exec playwright install chromium --with-deps
-          pnpm exec playwright install firefox --with-deps
-          pnpm exec playwright install webkit --with-deps
+          npx playwright install chromium --with-deps
+          npx playwright install firefox --with-deps
+          npx playwright install webkit --with-deps
 
       - name: Run tests
-        run: pnpm test:coverage && pnpm test:e2e
+        run: npm test:coverage && npm test:e2e
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
-        with:
-          file: ./coverage/lcov.info
-          flags: unittests
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
